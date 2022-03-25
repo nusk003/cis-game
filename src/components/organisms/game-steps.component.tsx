@@ -1,6 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import { GameStep } from "@src/components//atoms";
+import { useGameEngine } from "@src/utils/hooks";
+import { useMemo } from "react";
 
 const SWrapper = styled.div`
   display: grid;
@@ -11,11 +12,22 @@ const SWrapper = styled.div`
 `;
 
 export const GameSteps = () => {
-  return (
-    <SWrapper>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((step) => (
-        <GameStep step={step} active={step === 1} locked={step !== 1} />
-      ))}
-    </SWrapper>
-  );
+  const { currentStep, totalSteps } = useGameEngine();
+
+  const steps = useMemo(() => {
+    const steps = [];
+    for (let i = 0; i < totalSteps; i++) {
+      const step = i + 1;
+      steps.push(
+        <GameStep
+          step={step}
+          active={step === currentStep}
+          locked={step > currentStep}
+        />
+      );
+    }
+    return steps;
+  }, [totalSteps, currentStep]);
+
+  return <SWrapper>{steps}</SWrapper>;
 };

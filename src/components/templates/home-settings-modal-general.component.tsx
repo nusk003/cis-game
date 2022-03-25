@@ -39,18 +39,22 @@ const SMuteIcon = styled(BiVolumeMute)`
   cursor: pointer;
 `;
 
-enum GameComplexity {
+export enum GameComplexity {
   Normal = "Normal",
-  Inermediate = "Inermediate",
+  Intermediate = "Intermediate",
 }
 
 export const HomeSettingsModalGeneral = () => {
-  const { sound, setSound } = useStore(
-    useCallback(({ setSound, sound }) => ({ setSound, sound }), [])
-  );
-
-  const [complexity, setComplexity] = useState<GameComplexity>(
-    GameComplexity.Normal
+  const { sound, setSound, complexity, setComplexity } = useStore(
+    useCallback(
+      ({ setSound, sound, complexity, setComplexity }) => ({
+        setSound,
+        sound,
+        complexity,
+        setComplexity,
+      }),
+      []
+    )
   );
 
   const SoundIcon = sound ? SSoundIcon : SMuteIcon;
@@ -66,7 +70,10 @@ export const HomeSettingsModalGeneral = () => {
     [setComplexity]
   );
 
-  const complexityOptions = [GameComplexity.Normal, GameComplexity.Inermediate];
+  const complexityOptions = [
+    GameComplexity.Normal,
+    GameComplexity.Intermediate,
+  ];
 
   return (
     <>

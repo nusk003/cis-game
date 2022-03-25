@@ -10,6 +10,7 @@ import { theme } from "@src/components/theme";
 import { GameOverviewModal } from "@src/components/templates";
 import { useCallback, useEffect, useState } from "react";
 import { DigitBuildProps, getMatchStickParts } from "@src/utils/helper";
+import { useGameEngine } from "@src/utils/hooks";
 
 interface GameStepProps {
   active?: boolean;
@@ -40,6 +41,8 @@ const SContainer = styled.div`
 `;
 
 export const Game = () => {
+  const { equation } = useGameEngine();
+
   const [visibleOverviewModal, setVisibleOverviewModal] =
     useState<boolean>(false);
 
@@ -51,48 +54,9 @@ export const Game = () => {
     setVisibleOverviewModal(true);
   }, [setVisibleOverviewModal]);
 
-  // useEffect(() => {
-  //   const questions = [];
-  //   const randomNumber1 = Math.random() * 10;
-  //   const randomNumber2 = Math.random() * 10;
-  //   if (randomNumber1 >= 10 || randomNumber2 >= 10) {
-  //     // loop
-  //   }
-
-  //   const realOutput =
-  //     (Math.random() * 10) % 2 === 0
-  //       ? randomNumber1 + randomNumber2
-  //       : randomNumber1 - randomNumber2;
-
-  //   if (realOutput >= 10 || realOutput < 0) {
-  //     // loop
-  //   }
-
-  //   const randomNumber1Parts = getMatchStickParts(randomNumber1);
-  //   const randomNumber2Parts = getMatchStickParts(randomNumber2);
-  //   const realOutputParts = getMatchStickParts(realOutput);
-
-  //   const breakIdentifier = Math.random() * 10;
-
-  //   let lossDigit: DigitBuildProps;
-  //   let addDigit: DigitBuildProps;
-
-  //   if (breakIdentifier > 5) {
-  //     lossDigit = randomNumber1Parts;
-  //     addDigit = randomNumber2Parts;
-  //   } else if (breakIdentifier === 5) {
-  //     lossDigit = randomNumber1Parts;
-  //     addDigit = realOutputParts;
-  //   } else {
-  //     lossDigit = randomNumber2Parts;
-  //     addDigit = realOutputParts;
-  //   }
-
-  //   Object.keys(lossDigit).map((key) => {
-  //     if ((lossDigit as any)[key]) {
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    console.log(equation.correct);
+  }, [equation]);
 
   return (
     <>
@@ -104,13 +68,7 @@ export const Game = () => {
         <Header onPauseClick={openOverviewModal} />
         <Timer time={20} mt="24px" />
         <SEquationWrapper>
-          <MatchStickEquation
-            equation={{
-              inputs: [1, 6],
-              operators: [MatchStickOperationType.Plus],
-              output: 8,
-            }}
-          />
+          <MatchStickEquation equation={equation.wrong} />
         </SEquationWrapper>
         <GameSteps />
       </SContainer>

@@ -7,10 +7,11 @@ import {
 } from "@src/components/molecules";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { getMatchStickParts, getNumberFromParts } from "@src/utils/helper";
 import { v4 as uuid } from "uuid";
 import { DraggedItem } from "@src/components/atoms";
+import { useGameEngine } from "@src/utils/hooks";
 
 const SWrapper = styled.div`
   display: grid;
@@ -35,6 +36,10 @@ interface Props {
 export const MatchStickEquation: React.FC<Props> = (props) => {
   const [equation, setEquation] = useState<Equation>(props.equation);
 
+  const { goToNextStep, checkEquation } = useGameEngine();
+
+  useEffect(() => setEquation(props.equation), [props.equation]);
+
   const onDrop = useCallback(
     (part: DigitPart, index = -1, item: DraggedItem) => {
       // if drag and drop are same digit
@@ -55,7 +60,10 @@ export const MatchStickEquation: React.FC<Props> = (props) => {
             newEquation = { ...equation, ...{ output: newNumber } };
           }
 
-          setEquation(newEquation);
+          if (checkEquation(newEquation)) {
+            setEquation(newEquation);
+            goToNextStep();
+          }
         }
       } else {
         const dropNumber =
@@ -98,11 +106,14 @@ export const MatchStickEquation: React.FC<Props> = (props) => {
 
           newEquation.inputs = newInputs;
 
-          setEquation(newEquation);
+          if (checkEquation(newEquation)) {
+            setEquation(newEquation);
+            goToNextStep();
+          }
         }
       }
     },
-    [equation, setEquation]
+    [equation, setEquation, checkEquation, goToNextStep]
   );
 
   const RenderDigit: React.FC<{ number: number; index?: number }> = ({
