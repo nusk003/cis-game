@@ -146,6 +146,13 @@ export const LoginForm = () => {
           wrongEquation.inputs[1] = gainNumber2;
         } else if (gainOutputNumber && outputNumber !== gainOutputNumber) {
           wrongEquation.output = gainOutputNumber;
+        } else {
+          const selfExchangeNumber1 = getSelfExchangedNumber(randomNumber1);
+          if (selfExchangeNumber1 && selfExchangeNumber1 !== randomNumber1) {
+            wrongEquation.inputs[0] = selfExchangeNumber1;
+          } else {
+            return undefined;
+          }
         }
       } else if (lossNumber2 !== randomNumber2) {
         wrongEquation.inputs[1] = lossNumber2;
@@ -156,6 +163,13 @@ export const LoginForm = () => {
           wrongEquation.inputs[0] = gainNumber1;
         } else if (gainOutputNumber && outputNumber !== gainOutputNumber) {
           wrongEquation.output = gainOutputNumber;
+        } else {
+          const selfExchangeNumber2 = getSelfExchangedNumber(randomNumber2);
+          if (selfExchangeNumber2 && selfExchangeNumber2 !== randomNumber2) {
+            wrongEquation.inputs[1] = selfExchangeNumber2;
+          } else {
+            return undefined;
+          }
         }
       } else if (lossNumberOutput !== outputNumber) {
         wrongEquation.output = outputNumber;
@@ -166,22 +180,31 @@ export const LoginForm = () => {
           wrongEquation.inputs[0] = gainNumber1;
         } else if (gainNumber2 && randomNumber2 !== gainNumber2) {
           wrongEquation.inputs[1] = gainNumber2;
+        } else {
+          const selfExchangeOutput = getSelfExchangedNumber(outputNumber);
+          if (selfExchangeOutput && selfExchangeOutput !== outputNumber) {
+            wrongEquation.output = selfExchangeOutput;
+          } else {
+            return undefined;
+          }
         }
       } else {
-        const selfExchangeNumber1 = getSelfExchangedNumber(randomNumber1);
-        const selfExchangeNumber2 = getSelfExchangedNumber(randomNumber2);
-        const selfExchangeOutput = getSelfExchangedNumber(outputNumber);
+        return undefined;
+      }
 
-        if (selfExchangeNumber1 && selfExchangeNumber1 !== randomNumber1) {
-          wrongEquation.inputs[0] = selfExchangeNumber1;
-        } else if (
-          selfExchangeNumber2 &&
-          selfExchangeNumber2 !== randomNumber2
-        ) {
-          wrongEquation.inputs[1] = selfExchangeNumber2;
-        } else if (selfExchangeOutput && selfExchangeOutput !== outputNumber) {
-          wrongEquation.output = selfExchangeOutput;
-        }
+      //TODO: Make sure the equation is wrong
+      let realOutput = 0;
+      wrongEquation.inputs.forEach((input, index) => {
+        if (index === 0) realOutput += input;
+        else if (
+          wrongEquation.operators[index - 1] === MatchStickOperationType.Plus
+        )
+          realOutput += input;
+        else realOutput -= input;
+      });
+
+      if (realOutput === wrongEquation.output) {
+        return undefined;
       }
 
       return { correct: equation, wrong: wrongEquation };
@@ -191,6 +214,9 @@ export const LoginForm = () => {
     let i = 0;
     while (i < 10) {
       const equation = generateEquation();
+      if (!equation) {
+        continue;
+      }
       const checkDuplicate = equations.find((eq) =>
         _.isEqual(equation.wrong, eq.wrong)
       );
