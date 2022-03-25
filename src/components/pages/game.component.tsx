@@ -8,7 +8,8 @@ import {
 import styled from "styled-components";
 import { theme } from "@src/components/theme";
 import { GameOverviewModal } from "@src/components/templates";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { DigitBuildProps, getMatchStickParts } from "@src/utils/helper";
 
 interface GameStepProps {
   active?: boolean;
@@ -50,6 +51,49 @@ export const Game = () => {
     setVisibleOverviewModal(true);
   }, [setVisibleOverviewModal]);
 
+  // useEffect(() => {
+  //   const questions = [];
+  //   const randomNumber1 = Math.random() * 10;
+  //   const randomNumber2 = Math.random() * 10;
+  //   if (randomNumber1 >= 10 || randomNumber2 >= 10) {
+  //     // loop
+  //   }
+
+  //   const realOutput =
+  //     (Math.random() * 10) % 2 === 0
+  //       ? randomNumber1 + randomNumber2
+  //       : randomNumber1 - randomNumber2;
+
+  //   if (realOutput >= 10 || realOutput < 0) {
+  //     // loop
+  //   }
+
+  //   const randomNumber1Parts = getMatchStickParts(randomNumber1);
+  //   const randomNumber2Parts = getMatchStickParts(randomNumber2);
+  //   const realOutputParts = getMatchStickParts(realOutput);
+
+  //   const breakIdentifier = Math.random() * 10;
+
+  //   let lossDigit: DigitBuildProps;
+  //   let addDigit: DigitBuildProps;
+
+  //   if (breakIdentifier > 5) {
+  //     lossDigit = randomNumber1Parts;
+  //     addDigit = randomNumber2Parts;
+  //   } else if (breakIdentifier === 5) {
+  //     lossDigit = randomNumber1Parts;
+  //     addDigit = realOutputParts;
+  //   } else {
+  //     lossDigit = randomNumber2Parts;
+  //     addDigit = realOutputParts;
+  //   }
+
+  //   Object.keys(lossDigit).map((key) => {
+  //     if ((lossDigit as any)[key]) {
+  //     }
+  //   });
+  // }, []);
+
   return (
     <>
       <GameOverviewModal
@@ -62,11 +106,8 @@ export const Game = () => {
         <SEquationWrapper>
           <MatchStickEquation
             equation={{
-              inputs: [1, 6, 1],
-              operators: [
-                MatchStickOperationType.Plus,
-                MatchStickOperationType.Minus,
-              ],
+              inputs: [1, 6],
+              operators: [MatchStickOperationType.Plus],
               output: 8,
             }}
           />

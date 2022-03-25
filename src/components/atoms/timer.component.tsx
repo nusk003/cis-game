@@ -1,3 +1,4 @@
+import { useSound } from "@src/utils/hooks";
 import React, { useEffect, useState } from "react";
 import { SpaceProps } from "styled-system";
 import { Text } from ".";
@@ -8,6 +9,8 @@ interface Props extends SpaceProps {
 
 export const Timer: React.FC<Props> = ({ time, ...rest }) => {
   const [count, setCount] = useState(time);
+
+  useSound("https://cis-game-assets.s3.amazonaws.com/timer-sound.wav");
 
   useEffect(() => {
     if (count === 0) {

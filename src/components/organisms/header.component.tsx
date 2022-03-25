@@ -5,6 +5,7 @@ import { BsFillPauseBtnFill } from "react-icons/bs";
 import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { theme } from "@src/components/theme";
 import React, { useCallback, useState } from "react";
+import { useStore } from "@src/store";
 
 const SWrapper = styled.div`
   display: grid;
@@ -34,7 +35,15 @@ interface Props {
 }
 
 export const Header: React.FC<Props> = ({ onPauseClick }) => {
-  const [sound, setSound] = useState<boolean>(true);
+  const { sound, setSound } = useStore(
+    useCallback(
+      ({ sound, setSound }) => ({
+        sound,
+        setSound,
+      }),
+      []
+    )
+  );
 
   const SoundIcon = sound ? SSoundIcon : SMuteIcon;
 

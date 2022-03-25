@@ -20,7 +20,7 @@ const SWrapper = styled.div`
   width: fit-content;
 `;
 
-type Equation = {
+export type Equation = {
   inputs: Array<number>;
   operators: Array<
     MatchStickOperationType.Minus | MatchStickOperationType.Plus

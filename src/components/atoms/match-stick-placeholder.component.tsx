@@ -5,9 +5,17 @@ export interface MatchStickPlaceholderProps {
   isActive?: boolean;
 }
 
+const size = 100;
+
 export const MatchStickPlaceholder = styled.div<MatchStickPlaceholderProps>`
   height: ${({ horizontal, isActive }) =>
-    horizontal ? (isActive ? "30px" : "10px") : "150px"};
+    horizontal ? (isActive ? "30px" : "5px") : `${size}px`};
   width: ${({ horizontal, isActive }) =>
-    horizontal ? "150px" : isActive ? "30px" : "10px"};
+    horizontal ? `${size}px` : isActive ? "30px" : "5px"};
+  background-color: rgba(
+    0,
+    0,
+    0,
+    ${({ isActive }) => (isActive ? "0.5" : "0")}
+  );
 `;

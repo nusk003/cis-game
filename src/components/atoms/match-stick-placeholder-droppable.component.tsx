@@ -30,7 +30,6 @@ export const MatchStickPlaceholderDroppable: React.FC<Props> = ({
   }));
 
   useEffect(() => {
-    console.log(isActive);
     if (item) {
       if (isActive) {
         item.setStyle(!!rest.horizontal);

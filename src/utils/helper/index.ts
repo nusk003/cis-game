@@ -1,4 +1,4 @@
-interface DigitBuildProps {
+export interface DigitBuildProps {
   a?: boolean;
   b?: boolean;
   c?: boolean;
@@ -17,18 +17,26 @@ export const getMatchStickParts = (number: number): DigitBuildProps => {
       d: true,
       e: true,
       f: true,
+      g: false,
     };
   } else if (number === 1) {
     return {
+      a: false,
       b: true,
       c: true,
+      d: false,
+      e: false,
+      f: false,
+      g: false,
     };
   } else if (number === 2) {
     return {
       a: true,
       b: true,
+      c: false,
       d: true,
       e: true,
+      f: false,
       g: true,
     };
   } else if (number === 3) {
@@ -37,26 +45,34 @@ export const getMatchStickParts = (number: number): DigitBuildProps => {
       b: true,
       c: true,
       d: true,
+      e: false,
+      f: false,
       g: true,
     };
   } else if (number === 4) {
     return {
+      a: false,
       b: true,
       c: true,
+      d: false,
+      e: false,
       f: true,
       g: true,
     };
   } else if (number === 5) {
     return {
       a: true,
+      b: false,
       c: true,
       d: true,
+      e: false,
       f: true,
       g: true,
     };
   } else if (number === 6) {
     return {
       a: true,
+      b: false,
       c: true,
       d: true,
       e: true,
@@ -68,6 +84,10 @@ export const getMatchStickParts = (number: number): DigitBuildProps => {
       a: true,
       b: true,
       c: true,
+      d: false,
+      e: false,
+      f: false,
+      g: false,
     };
   } else if (number === 8) {
     return {
@@ -85,6 +105,7 @@ export const getMatchStickParts = (number: number): DigitBuildProps => {
       b: true,
       c: true,
       d: true,
+      e: false,
       f: true,
       g: true,
     };

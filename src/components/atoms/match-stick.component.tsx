@@ -7,12 +7,15 @@ export interface MatchStickProps extends SpaceProps {
   horizontal?: boolean;
 }
 
+const size = 100;
+
 export const MatchStick = styled.img.attrs<MatchStickProps>(
   ({ horizontal }) => ({
     alt: "match_stick",
     src: horizontal ? MatchStickHorizontal : MatchStickVertical,
   })
 )<MatchStickProps>`
-  ${({ horizontal }) => (horizontal ? "width: 150px" : "height: 150px")};
+  ${({ horizontal }) =>
+    horizontal ? `width: ${size}px` : `height: ${size}px`};
   ${space}
 `;

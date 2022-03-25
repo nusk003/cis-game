@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { theme } from "@src/components/theme";
 import { useCallback, useState } from "react";
 import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
+import { useStore } from "@src/store";
 
 const SOptionsWrapper = styled.div`
   margin-top: 16px;
@@ -44,7 +45,9 @@ enum GameComplexity {
 }
 
 export const HomeSettingsModalGeneral = () => {
-  const [sound, setSound] = useState<boolean>(false);
+  const { sound, setSound } = useStore(
+    useCallback(({ setSound, sound }) => ({ setSound, sound }), [])
+  );
 
   const [complexity, setComplexity] = useState<GameComplexity>(
     GameComplexity.Normal

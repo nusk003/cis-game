@@ -16,21 +16,13 @@ interface Props {
   onDrop: (part: DigitPart, item: DraggedItem) => void;
 }
 
-interface DigitBuildProps {
-  a?: boolean;
-  b?: boolean;
-  c?: boolean;
-  d?: boolean;
-  e?: boolean;
-  f?: boolean;
-  g?: boolean;
-}
+const size = 100;
 
 const SWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
-  width: 165px;
-  height: 300px;
+  width: ${size}px;
+  height: ${size * 2 + 15}px;
 `;
 
 const SRowStickWrapper = styled.div<GridProps>`
@@ -71,7 +63,7 @@ export const MatchStickDigit: React.FC<Props> = ({ index, number, onDrop }) => {
         {renderStick("f")}
         {renderStick("e")}
       </SRowStickWrapper>
-      <SRowStickWrapper gridGap="135px">
+      <SRowStickWrapper gridGap={`${size - 15}px`}>
         {renderStick("a", true)}
         {renderStick("g", true)}
         {renderStick("d", true)}
