@@ -16,6 +16,7 @@ interface Props extends SpaceProps {
 
 export type TimerRef = {
   reset: () => void;
+  stop: () => void;
 };
 
 const CountDown: React.ForwardRefRenderFunction<TimerRef, Props> = (
@@ -23,17 +24,21 @@ const CountDown: React.ForwardRefRenderFunction<TimerRef, Props> = (
   ref
 ) => {
   const [count, setCount] = useState(time);
+  const [stop, setStop] = useState(false);
 
   useImperativeHandle(ref, () => ({
     reset: () => {
       setCount(time);
+    },
+    stop: () => {
+      setStop(true);
     },
   }));
 
   useSound("https://cis-game-assets.s3.amazonaws.com/timer-sound.wav");
 
   useEffect(() => {
-    if (paused) {
+    if (paused || stop) {
       return;
     }
     if (count === 0) {
@@ -48,7 +53,7 @@ const CountDown: React.ForwardRefRenderFunction<TimerRef, Props> = (
     return () => {
       clearInterval(interval);
     };
-  }, [count, setCount, paused]);
+  }, [count, setCount, paused, stop]);
   return (
     <Text.H1 {...rest} textAlign="center">
       00:{count.toLocaleString("en-US", { minimumIntegerDigits: 2 })}

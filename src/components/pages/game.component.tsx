@@ -67,9 +67,12 @@ export const Game = () => {
   const handleOnNext = useCallback(() => {
     addScore();
     updateQuestions(question);
-    if (currentStep === totalSteps) openOverModal();
+    if (currentStep === totalSteps) {
+      timerRef.current?.stop();
+      openOverModal();
+    }
     goToNextStep();
-  }, [addScore, goToNextStep, question, updateQuestions]);
+  }, [addScore, goToNextStep, question, updateQuestions, timerRef]);
 
   const onGoToHome = useCallback(() => {
     closeOverModal();
