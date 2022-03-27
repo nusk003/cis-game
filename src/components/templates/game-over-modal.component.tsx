@@ -1,16 +1,16 @@
+import { Button, Text } from "@src/components/atoms";
 import {
-  Modal,
   GameScore,
   MatchStickOperationType,
+  Modal,
 } from "@src/components/molecules";
-import { Text, Button } from "@src/components/atoms";
-import React, { useCallback } from "react";
-import { useGameEngine } from "@src/utils/hooks";
-import styled from "styled-components";
-import { theme } from "@src/components/theme";
-import { SiVerizon } from "react-icons/si";
-import { AiOutlineClose } from "react-icons/ai";
 import { Equation } from "@src/components/organisms";
+import { theme } from "@src/components/theme";
+import { useGameEngine } from "@src/utils/hooks";
+import React from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { SiVerizon } from "react-icons/si";
+import styled from "styled-components";
 
 interface Props {
   visible: boolean;

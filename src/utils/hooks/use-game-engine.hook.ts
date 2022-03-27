@@ -1,7 +1,6 @@
-import { TimerRef } from "@src/components/atoms";
 import { useStore } from "@src/store";
 import { GameEngine, GameQuestion } from "@src/utils/service";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 export const useGameEngine = () => {
   const gameEngine = GameEngine.instance;

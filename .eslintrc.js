@@ -19,5 +19,9 @@ module.exports = {
         patterns: ["../*"],
       },
     ],
+    "no-unused-vars": [
+      "error",
+      { vars: "all", args: "after-used", ignoreRestSiblings: false },
+    ],
   },
 };

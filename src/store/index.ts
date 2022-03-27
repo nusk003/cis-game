@@ -1,4 +1,4 @@
-import { GameComplexity } from "@src/components/templates/home-settings-modal-general.component";
+import { GameComplexity } from "@src/components/templates";
 import { GameQuestion } from "@src/utils/service";
 import create from "zustand";
 

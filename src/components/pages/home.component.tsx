@@ -1,13 +1,12 @@
-import styled from "styled-components";
-import { Button, Text, FireAnimation } from "@src/components/atoms";
-import { GiMatchHead } from "react-icons/gi";
+import { Button, FireAnimation, Text } from "@src/components/atoms";
+import { HomeSettingsModal } from "@src/components/templates";
+import { useStore } from "@src/store";
+import { useAuth } from "@src/utils/hooks";
+import { useCallback, useState } from "react";
 import { AiFillSetting } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
-import { useCallback, useState } from "react";
-import { useStore } from "@src/store";
-import { HomeSettingsModal } from "@src/components/templates";
-import { Auth } from "aws-amplify";
-import { useAuth } from "@src/utils/hooks";
+import { GiMatchHead } from "react-icons/gi";
+import styled from "styled-components";
 
 const SWrapper = styled.div`
   display: grid;

@@ -1,6 +1,5 @@
 import { Button } from "@src/components/atoms";
 import { GameScore, Modal } from "@src/components/molecules";
-import { useStore } from "@src/store";
 import { useGameEngine } from "@src/utils/hooks";
 import React, { useCallback } from "react";
 import { AiFillCloseCircle, AiFillPlayCircle } from "react-icons/ai";

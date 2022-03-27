@@ -1,7 +1,7 @@
-import React, { memo, useEffect } from "react";
+import { DigitPart } from "@src/components/molecules";
+import React, { memo } from "react";
 import { useDrop } from "react-dnd";
 import { MatchStickPlaceholder, MatchStickPlaceholderProps } from ".";
-import { DigitPart } from "@src/components/molecules";
 
 export interface DraggedItem {
   index: number;

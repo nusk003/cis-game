@@ -1,9 +1,6 @@
-import React, { memo, useState } from "react";
-import { useDrag, DragPreviewImage } from "react-dnd";
+import React, { memo } from "react";
+import { useDrag } from "react-dnd";
 import { MatchStick, MatchStickProps } from ".";
-import MatchStickVertical from "@src/assets/images/match_stick_small_vertical.png";
-import MatchStickHorizontal from "@src/assets/images/match_stick_small_horizontal.png";
-import { v4 } from "uuid";
 
 interface Props extends MatchStickProps {
   matchStickPart: string;

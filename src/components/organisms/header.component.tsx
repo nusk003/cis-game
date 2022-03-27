@@ -1,12 +1,12 @@
 import { Text } from "@src/components/atoms";
-import styled from "styled-components";
 import { GameScore } from "@src/components/molecules";
-import { BsFillPauseBtnFill } from "react-icons/bs";
-import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { theme } from "@src/components/theme";
-import React, { useCallback, useState } from "react";
 import { useStore } from "@src/store";
 import { useGameEngine } from "@src/utils/hooks";
+import React, { useCallback } from "react";
+import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
+import { BsFillPauseBtnFill } from "react-icons/bs";
+import styled from "styled-components";
 
 const SWrapper = styled.div`
   display: grid;

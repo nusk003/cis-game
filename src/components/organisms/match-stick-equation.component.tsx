@@ -1,18 +1,17 @@
-import styled from "styled-components";
+import { DraggedItem } from "@src/components/atoms";
 import {
+  DigitPart,
   MatchStickDigit,
   MatchStickOperationType,
   MatchStickOperator,
-  DigitPart,
 } from "@src/components/molecules";
+import { getMatchStickParts, getNumberFromParts } from "@src/utils/helper";
+import { GameQuestion } from "@src/utils/service";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import React, { memo, useCallback, useEffect, useState } from "react";
-import { getMatchStickParts, getNumberFromParts } from "@src/utils/helper";
+import styled from "styled-components";
 import { v4 as uuid } from "uuid";
-import { DraggedItem } from "@src/components/atoms";
-import { useGameEngine } from "@src/utils/hooks";
-import { GameQuestion } from "@src/utils/service";
 
 const SWrapper = styled.div`
   display: grid;

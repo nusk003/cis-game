@@ -1,9 +1,9 @@
 import { Text } from "@src/components/atoms";
-import styled from "styled-components";
 import { theme } from "@src/components/theme";
-import { useCallback, useState } from "react";
-import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { useStore } from "@src/store";
+import { useCallback } from "react";
+import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
+import styled from "styled-components";
 
 const SOptionsWrapper = styled.div`
   margin-top: 16px;

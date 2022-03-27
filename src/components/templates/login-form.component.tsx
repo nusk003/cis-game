@@ -1,7 +1,6 @@
 import { Button, Input } from "@src/components/atoms";
 import { Form } from "@src/components/organisms";
 import { useAuth } from "@src/utils/hooks";
-import { Auth } from "aws-amplify";
 import React, { useCallback, useState } from "react";
 
 export const LoginForm = () => {
