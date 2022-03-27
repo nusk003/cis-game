@@ -61,18 +61,18 @@ export const Game = () => {
   }, [setVisibleOverModal]);
 
   const openOverModal = useCallback(() => {
-    setVisibleOverModal(true);
-  }, [setVisibleOverModal]);
+    if (currentStep >= totalSteps) {
+      timerRef.current?.stop();
+      setVisibleOverModal(true);
+    }
+  }, [setVisibleOverModal, currentStep, totalSteps, timerRef]);
 
   const handleOnNext = useCallback(() => {
     addScore();
     updateQuestions(question);
-    if (currentStep === totalSteps) {
-      timerRef.current?.stop();
-      openOverModal();
-    }
+    openOverModal();
     goToNextStep();
-  }, [addScore, goToNextStep, question, updateQuestions, timerRef]);
+  }, [addScore, goToNextStep, question, updateQuestions, openOverModal]);
 
   const onGoToHome = useCallback(() => {
     closeOverModal();
@@ -90,7 +90,10 @@ export const Game = () => {
       <SContainer>
         <Header onPauseClick={openOverviewModal} />
         <Timer
-          onEnd={() => goToNextStep()}
+          onEnd={() => {
+            openOverModal();
+            goToNextStep();
+          }}
           paused={paused}
           ref={timerRef}
           time={timeout}
