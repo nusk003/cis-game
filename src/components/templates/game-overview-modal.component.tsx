@@ -1,6 +1,7 @@
 import { Button } from "@src/components/atoms";
 import { GameScore, Modal } from "@src/components/molecules";
 import { useStore } from "@src/store";
+import { useGameEngine } from "@src/utils/hooks";
 import React, { useCallback } from "react";
 import { AiFillCloseCircle, AiFillPlayCircle } from "react-icons/ai";
 import { GiMatchHead } from "react-icons/gi";
@@ -27,27 +28,34 @@ interface Props {
 }
 
 export const GameOverviewModal: React.FC<Props> = ({ visible, onClose }) => {
-  const { setGameStarted } = useStore(
-    useCallback(({ setGameStarted }) => ({ setGameStarted }), [])
-  );
+  const { resume, quitGame, startNewGame } = useGameEngine();
 
-  const quitGame = useCallback(() => {
-    setGameStarted(false);
-  }, []);
+  const onCloseHandler = useCallback(() => {
+    onClose();
+    resume();
+  }, [onClose, resume]);
+
+  const onStartNewGame = useCallback(() => {
+    onClose();
+    startNewGame();
+  }, [onClose, startNewGame]);
 
   return (
-    <Modal visible={visible} onClose={onClose}>
+    <Modal visible={visible} onClose={onCloseHandler}>
       <SHeader>
-        <GameScore type="High Score" />
-        <Button buttonStyle="link" onClick={onClose}>
+        <GameScore score={7} type="High Score" />
+        <Button buttonStyle="link" onClick={onCloseHandler}>
           <AiFillCloseCircle size="32px" />
         </Button>
       </SHeader>
       <SButtonsWrapper>
-        <Button onClick={onClose} leftIcon={<AiFillPlayCircle size="32px" />}>
+        <Button
+          onClick={onCloseHandler}
+          leftIcon={<AiFillPlayCircle size="32px" />}
+        >
           Resume
         </Button>
-        <Button onClick={onClose} leftIcon={<GiMatchHead size="32px" />}>
+        <Button onClick={onStartNewGame} leftIcon={<GiMatchHead size="32px" />}>
           Start a new game
         </Button>
         <Button onClick={quitGame} leftIcon={<RiShutDownLine size="32px" />}>

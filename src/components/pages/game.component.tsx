@@ -1,31 +1,13 @@
-import { Timer, Text } from "@src/components/atoms";
-import { MatchStickOperationType } from "@src/components/molecules";
+import { Timer, TimerRef } from "@src/components/atoms";
 import {
+  GameSteps,
   Header,
   MatchStickEquation,
-  GameSteps,
 } from "@src/components/organisms";
-import styled from "styled-components";
-import { theme } from "@src/components/theme";
-import { GameOverviewModal } from "@src/components/templates";
-import { useCallback, useEffect, useState } from "react";
-import { DigitBuildProps, getMatchStickParts } from "@src/utils/helper";
+import { GameOverModal, GameOverviewModal } from "@src/components/templates";
 import { useGameEngine } from "@src/utils/hooks";
-
-interface GameStepProps {
-  active?: boolean;
-}
-
-const SGameStep = styled.div<GameStepProps>`
-  border: 1px solid ${theme.colors.lightMainColor};
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  ${({ active }) => (active ? "background-color: rgba(0,0,0,0.4)" : "")};
-`;
+import { useCallback, useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 
 const SEquationWrapper = styled.div`
   display: grid;
@@ -41,10 +23,29 @@ const SContainer = styled.div`
 `;
 
 export const Game = () => {
-  const { equation } = useGameEngine();
+  const {
+    question,
+    currentStep,
+    timeout,
+    goToNextStep,
+    totalSteps,
+    checkEquation,
+    addScore,
+    paused,
+    updateQuestions,
+    quitGame,
+  } = useGameEngine();
+
+  const timerRef = useRef<TimerRef>(null);
+
+  useEffect(() => {
+    timerRef.current?.reset();
+  }, [currentStep]);
 
   const [visibleOverviewModal, setVisibleOverviewModal] =
     useState<boolean>(false);
+
+  const [visibleOverModal, setVisibleOverModal] = useState<boolean>(false);
 
   const closeOverviewModal = useCallback(() => {
     setVisibleOverviewModal(false);
@@ -54,9 +55,25 @@ export const Game = () => {
     setVisibleOverviewModal(true);
   }, [setVisibleOverviewModal]);
 
-  useEffect(() => {
-    console.log(equation.correct);
-  }, [equation]);
+  const closeOverModal = useCallback(() => {
+    setVisibleOverModal(false);
+  }, [setVisibleOverModal]);
+
+  const openOverModal = useCallback(() => {
+    setVisibleOverModal(true);
+  }, [setVisibleOverModal]);
+
+  const handleOnNext = useCallback(() => {
+    addScore();
+    updateQuestions(question);
+    if (currentStep === totalSteps) openOverModal();
+    goToNextStep();
+  }, [addScore, goToNextStep, question, updateQuestions]);
+
+  const onGoToHome = useCallback(() => {
+    closeOverModal();
+    quitGame();
+  }, [closeOverModal, quitGame]);
 
   return (
     <>
@@ -64,11 +81,24 @@ export const Game = () => {
         visible={visibleOverviewModal}
         onClose={closeOverviewModal}
       />
+      <GameOverModal onGoToHome={onGoToHome} visible={visibleOverModal} />
       <SContainer>
         <Header onPauseClick={openOverviewModal} />
-        <Timer time={20} mt="24px" />
+        <Timer
+          onEnd={() => goToNextStep()}
+          paused={paused}
+          ref={timerRef}
+          time={timeout}
+          mt="24px"
+        />
         <SEquationWrapper>
-          <MatchStickEquation equation={equation.wrong} />
+          {question ? (
+            <MatchStickEquation
+              onNext={handleOnNext}
+              checkEquation={checkEquation}
+              question={question}
+            />
+          ) : null}
         </SEquationWrapper>
         <GameSteps />
       </SContainer>

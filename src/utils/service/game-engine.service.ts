@@ -7,6 +7,14 @@ import {
   getMatchStickParts,
   getNumberFromParts,
 } from "@src/utils/helper";
+import { v4 as uuid } from "uuid";
+
+export interface GameQuestion {
+  id: string;
+  wrong: Equation;
+  correct: Equation;
+  answered: boolean;
+}
 
 export class GameEngine {
   _steps = 10;
@@ -267,10 +275,15 @@ export class GameEngine {
       return undefined;
     }
 
-    return { correct: equation, wrong: wrongEquation };
+    return {
+      id: uuid(),
+      correct: equation,
+      wrong: wrongEquation,
+      answered: false,
+    };
   }
   generateEquations(complexity: GameComplexity) {
-    const equations: { correct: Equation; wrong: Equation }[] = [];
+    const equations: GameQuestion[] = [];
     let i = 0;
     while (i < 10) {
       const equation = this.generateEquation(complexity);
@@ -286,27 +299,7 @@ export class GameEngine {
         i++;
       }
     }
-    // equations.map((equation) => {
-    //   console.log(
-    //     "Correct",
-    //     equation.correct.inputs[0],
-    //     equation.correct.operators[0],
-    //     equation.correct.inputs[1],
-    //     equation.correct.operators[1] || "",
-    //     equation.correct.inputs[2] || "",
-    //     " = ",
-    //     equation.correct.output
-    //   );
-    //   console.log(
-    //     equation.wrong.inputs[0],
-    //     equation.wrong.operators[0],
-    //     equation.wrong.inputs[1],
-    //     equation.wrong.operators[1] || "",
-    //     equation.wrong.inputs[2] || "",
-    //     " = ",
-    //     equation.wrong.output
-    //   );
-    // });
+
     return equations;
   }
 }

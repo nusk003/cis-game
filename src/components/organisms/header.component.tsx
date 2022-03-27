@@ -6,6 +6,7 @@ import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { theme } from "@src/components/theme";
 import React, { useCallback, useState } from "react";
 import { useStore } from "@src/store";
+import { useGameEngine } from "@src/utils/hooks";
 
 const SWrapper = styled.div`
   display: grid;
@@ -45,6 +46,13 @@ export const Header: React.FC<Props> = ({ onPauseClick }) => {
     )
   );
 
+  const { pause, score } = useGameEngine();
+
+  const pauseClickHandler = useCallback(() => {
+    pause();
+    onPauseClick();
+  }, [pause, onPauseClick]);
+
   const SoundIcon = sound ? SSoundIcon : SMuteIcon;
 
   const onSoundChange = useCallback(() => {
@@ -54,7 +62,7 @@ export const Header: React.FC<Props> = ({ onPauseClick }) => {
   return (
     <SWrapper>
       <Text.H1>Math Stick</Text.H1>
-      <GameScore />
+      <GameScore score={score} />
       <SIcons>
         <SoundIcon
           color={theme.colors.lightMainColor}
@@ -62,7 +70,7 @@ export const Header: React.FC<Props> = ({ onPauseClick }) => {
           onClick={onSoundChange}
         />
         <SPauseIcon
-          onClick={onPauseClick}
+          onClick={pauseClickHandler}
           size="36px"
           color={theme.colors.lightMainColor}
         />

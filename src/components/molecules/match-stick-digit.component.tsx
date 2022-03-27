@@ -3,7 +3,7 @@ import {
   MatchStickPlaceholderDroppable,
 } from "@src/components/atoms";
 import { getMatchStickParts } from "@src/utils/helper";
-import React, { useCallback, useMemo } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import styled from "styled-components";
 import { grid, GridProps } from "styled-system";
 import { DraggedItem } from "@src/components/atoms";
@@ -31,47 +31,49 @@ const SRowStickWrapper = styled.div<GridProps>`
   ${grid};
 `;
 
-export const MatchStickDigit: React.FC<Props> = ({ index, number, onDrop }) => {
-  const digitBuild = useMemo(() => {
-    return getMatchStickParts(number);
-  }, [number]);
+export const MatchStickDigit: React.FC<Props> = memo(
+  ({ index, number, onDrop }) => {
+    const digitBuild = useMemo(() => {
+      return getMatchStickParts(number);
+    }, [number]);
 
-  const renderStick = useCallback(
-    (part: DigitPart, horizontal = false) => {
-      let RenderComponent;
-      if (digitBuild[part]) {
-        RenderComponent = MatchStickDraggable;
-      } else {
-        RenderComponent = MatchStickPlaceholderDroppable;
-      }
+    const renderStick = useCallback(
+      (part: DigitPart, horizontal = false) => {
+        let RenderComponent;
+        if (digitBuild[part]) {
+          RenderComponent = MatchStickDraggable;
+        } else {
+          RenderComponent = MatchStickPlaceholderDroppable;
+        }
 
-      return (
-        <RenderComponent
-          index={index}
-          onChange={onDrop}
-          matchStickPart={part}
-          horizontal={horizontal}
-        />
-      );
-    },
-    [digitBuild, index]
-  );
+        return (
+          <RenderComponent
+            index={index}
+            onChange={onDrop}
+            matchStickPart={part}
+            horizontal={horizontal}
+          />
+        );
+      },
+      [digitBuild, index]
+    );
 
-  return (
-    <SWrapper>
-      <SRowStickWrapper>
-        {renderStick("f")}
-        {renderStick("e")}
-      </SRowStickWrapper>
-      <SRowStickWrapper gridGap={`${size - 15}px`}>
-        {renderStick("a", true)}
-        {renderStick("g", true)}
-        {renderStick("d", true)}
-      </SRowStickWrapper>
-      <SRowStickWrapper>
-        {renderStick("b")}
-        {renderStick("c")}
-      </SRowStickWrapper>
-    </SWrapper>
-  );
-};
+    return (
+      <SWrapper>
+        <SRowStickWrapper>
+          {renderStick("f")}
+          {renderStick("e")}
+        </SRowStickWrapper>
+        <SRowStickWrapper gridGap={`${size - 15}px`}>
+          {renderStick("a", true)}
+          {renderStick("g", true)}
+          {renderStick("d", true)}
+        </SRowStickWrapper>
+        <SRowStickWrapper>
+          {renderStick("b")}
+          {renderStick("c")}
+        </SRowStickWrapper>
+      </SWrapper>
+    );
+  }
+);
