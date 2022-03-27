@@ -25,9 +25,14 @@ const SButtonsWrapper = styled.div`
 interface Props {
   visible: boolean;
   onClose: () => void;
+  onNewGame: () => void;
 }
 
-export const GameOverviewModal: React.FC<Props> = ({ visible, onClose }) => {
+export const GameOverviewModal: React.FC<Props> = ({
+  visible,
+  onClose,
+  onNewGame,
+}) => {
   const { resume, quitGame, startNewGame } = useGameEngine();
 
   const onCloseHandler = useCallback(() => {
@@ -37,8 +42,9 @@ export const GameOverviewModal: React.FC<Props> = ({ visible, onClose }) => {
 
   const onStartNewGame = useCallback(() => {
     onClose();
+    onNewGame();
     startNewGame();
-  }, [onClose, startNewGame]);
+  }, [onClose, startNewGame, onNewGame]);
 
   return (
     <Modal visible={visible} onClose={onCloseHandler}>

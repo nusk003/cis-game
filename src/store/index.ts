@@ -29,10 +29,10 @@ export type RootState = {
 };
 
 export const useStore = create<RootState>((set) => ({
-  loggedIn: true,
+  loggedIn: false,
   setLoggedIn: (loggedIn) => set({ loggedIn }),
 
-  gameStarted: true,
+  gameStarted: false,
   setGameStarted: (gameStarted) => set({ gameStarted }),
 
   gamePaused: false,

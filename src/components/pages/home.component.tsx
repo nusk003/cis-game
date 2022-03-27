@@ -6,6 +6,8 @@ import { BiLogOut } from "react-icons/bi";
 import { useCallback, useState } from "react";
 import { useStore } from "@src/store";
 import { HomeSettingsModal } from "@src/components/templates";
+import { Auth } from "aws-amplify";
+import { useAuth } from "@src/utils/hooks";
 
 const SWrapper = styled.div`
   display: grid;
@@ -36,21 +38,19 @@ const SRow = styled.div`
 `;
 
 export const Home = () => {
-  const [visibleSettingsModal, setVisibleSettingsModal] =
-    useState<boolean>(false);
-  const { setGameStarted, setLoggedIn } = useStore(
-    useCallback(
-      ({ setGameStarted, setLoggedIn }) => ({ setGameStarted, setLoggedIn }),
-      []
-    )
+  const [visibleSettingsModal, setVisibleSettingsModal] = useState<boolean>(
+    false
   );
+  const { setGameStarted } = useStore(
+    useCallback(({ setGameStarted }) => ({ setGameStarted }), [])
+  );
+
+  const { logout, currentUser } = useAuth();
+
+  const name = currentUser?.attributes?.name;
 
   const startGame = useCallback(() => {
     setGameStarted(true);
-  }, []);
-
-  const logout = useCallback(() => {
-    setLoggedIn(false);
   }, []);
 
   const closeSettingsModal = useCallback(() => {
@@ -60,6 +60,10 @@ export const Home = () => {
   const openSettingsModal = useCallback(() => {
     setVisibleSettingsModal(true);
   }, [setVisibleSettingsModal]);
+
+  const onLogout = useCallback(async () => {
+    await logout();
+  }, [logout]);
 
   return (
     <SWrapper>
@@ -73,7 +77,7 @@ export const Home = () => {
             <FireAnimation />
             <SHello>
               <Text.P>Hello,</Text.P>
-              <Text.H1>Nusky</Text.H1>
+              <Text.H1>{name}</Text.H1>
             </SHello>
           </SProfile>
           <Text.H1>Math Stick</Text.H1>
@@ -88,7 +92,7 @@ export const Home = () => {
           >
             Settings
           </Button>
-          <Button onClick={logout} leftIcon={<BiLogOut size="24px" />}>
+          <Button onClick={onLogout} leftIcon={<BiLogOut size="24px" />}>
             Logout
           </Button>
         </SButtonsWrapper>

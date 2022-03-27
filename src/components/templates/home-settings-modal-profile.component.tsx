@@ -1,28 +1,41 @@
 import { Input, Button } from "@src/components/atoms";
 import { Form } from "@src/components/organisms";
+import { useAuth } from "@src/utils/hooks";
+import React, { useCallback, useEffect, useState } from "react";
 
 export const HomeSettingsModalProfile = () => {
+  const { currentUser, updateUser } = useAuth();
+  const [name, setName] = useState(currentUser?.attributes?.name);
+
+  useEffect(() => {
+    if (currentUser?.attributes?.name) {
+      setName(currentUser.attributes.name);
+    }
+  }, [currentUser?.attributes]);
+
+  const onSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      const email = currentUser?.attributes?.email;
+      if (name && email) updateUser(name, email);
+    },
+    [currentUser, name]
+  );
+
   return (
-    <Form>
-      <Input defaultValue="Nusky" type="text" placeholder="First Name" />
+    <Form onSubmit={onSubmit}>
       <Input
-        defaultValue="Ahamed"
-        mt="16px"
+        defaultValue={name}
+        onChange={(e) => setName(e.target.value)}
         type="text"
-        placeholder="Last Name"
+        placeholder="Name"
       />
       <Input
-        defaultValue="nusk003@gmail.com"
+        defaultValue={currentUser?.attributes?.email}
         disabled
         mt="16px"
         type="email"
         placeholder="Email"
-      />
-      <Input
-        defaultValue="0772191987"
-        mt="16px"
-        type="password"
-        placeholder="Password"
       />
       <Button mt="24px">Update</Button>
     </Form>

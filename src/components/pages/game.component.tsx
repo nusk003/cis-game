@@ -42,8 +42,9 @@ export const Game = () => {
     timerRef.current?.reset();
   }, [currentStep]);
 
-  const [visibleOverviewModal, setVisibleOverviewModal] =
-    useState<boolean>(false);
+  const [visibleOverviewModal, setVisibleOverviewModal] = useState<boolean>(
+    false
+  );
 
   const [visibleOverModal, setVisibleOverModal] = useState<boolean>(false);
 
@@ -79,6 +80,7 @@ export const Game = () => {
     <>
       <GameOverviewModal
         visible={visibleOverviewModal}
+        onNewGame={() => timerRef.current?.reset()}
         onClose={closeOverviewModal}
       />
       <GameOverModal onGoToHome={onGoToHome} visible={visibleOverModal} />

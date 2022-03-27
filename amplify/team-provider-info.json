@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cisgame-dev-120408-authRole",
+      "UnauthRoleArn": "arn:aws:iam::953524634662:role/amplify-cisgame-dev-120408-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::953524634662:role/amplify-cisgame-dev-120408-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-cisgame-dev-120408-deployment",
+      "UnauthRoleName": "amplify-cisgame-dev-120408-unauthRole",
+      "StackName": "amplify-cisgame-dev-120408",
+      "StackId": "arn:aws:cloudformation:us-east-1:953524634662:stack/amplify-cisgame-dev-120408/ebe1bf30-ad97-11ec-97b9-0ac28fa87b07",
+      "AmplifyAppId": "d3ijlcbh7658cv"
+    },
+    "categories": {
+      "auth": {
+        "cisgame30bf8601": {}
+      }
+    }
+  }
+}
