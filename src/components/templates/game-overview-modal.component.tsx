@@ -32,7 +32,7 @@ export const GameOverviewModal: React.FC<Props> = ({
   onClose,
   onNewGame,
 }) => {
-  const { resume, quitGame, startNewGame } = useGameEngine();
+  const { resume, quitGame, startNewGame, score } = useGameEngine();
 
   const onCloseHandler = useCallback(() => {
     onClose();
@@ -48,7 +48,7 @@ export const GameOverviewModal: React.FC<Props> = ({
   return (
     <Modal visible={visible} onClose={onCloseHandler}>
       <SHeader>
-        <GameScore score={7} type="High Score" />
+        <GameScore score={score} />
         <Button buttonStyle="link" onClick={onCloseHandler}>
           <AiFillCloseCircle size="32px" />
         </Button>

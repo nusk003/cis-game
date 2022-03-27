@@ -13,17 +13,16 @@ const STextWrapper = styled.div``;
 const SIconWrapper = styled.div``;
 
 interface Props {
-  type?: string;
   score: number;
 }
 
-export const GameScore: React.FC<Props> = ({ type = "Score", score }) => {
+export const GameScore: React.FC<Props> = ({ score }) => {
   const { totalSteps } = useGameEngine();
 
   return (
     <SWrapper>
       <STextWrapper>
-        <Text.P>{type}</Text.P>
+        <Text.P>Score</Text.P>
         <Text.H1>
           {score} / {totalSteps}
         </Text.H1>
